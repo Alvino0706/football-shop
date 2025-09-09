@@ -65,11 +65,11 @@
     (3) Jalankan migrate → Django menyusun graf dependensi antar migrasi (lintas-app), menjalankan operasi yang belum diterapkan ke DB (eksekusi SQL), dan mencatat yang sudah dijalankan di tabel khusus django_migrations agar tidak diulang.
 
 5. Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
-    - Konvensi kuat: struktur proyek jelas (settings/urls/views/models/templates) → memudahkan memahami arsitektur web modern.
-    - Keamanan bawaan: proteksi CSRF, XSS, SQL injection, password hashing → sejak awal belajar secure by default.
+    - Konvensi kuat: struktur proyek jelas (settings/urls/views/models/templates) sehingga memudahkan memahami arsitektur web modern.
+    - Keamanan bawaan: proteksi CSRF, XSS, SQL injection, password hashing sehingga sejak awal belajar secure by default.
     - Produktif untuk CRUD: ORM dan admin mempercepat eksperimen konsep.
     - Skalabilitas konsep: setelah paham MVT dan middleware, mudah memahami framework lain (Flask/FastAPI, bahkan arsitektur di luar Python).
-    - Ekosistem & dokumentasi: contoh dan paket banyak (rest framework, allauth, dll.), bagus untuk pemula.
+    - Ekosistem & dokumentasi: contoh dan paket banyak (rest framework, dll.), bagus untuk pemula.
 
 6. Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
     - Ritme penjelasan runut dari setup → model → view → template.
