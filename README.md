@@ -87,4 +87,5 @@
 ---
 
 ### 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+
     Kita memerlukan data delivery dalam pengimplementasian sebuah platform karena platform hanya akan berguna jika data yang diproses dan dihasilkan dapat dikirimkan ke pihak yang membutuhkannya dengan tepat, cepat, dan aman. Dalam mengembangkan suatu platform, ada kalanya kita perlu mengirimkan data dari satu stack ke stack lainnya. Data yang dikirimkan bisa bermacam-macam bentuknya. Beberapa contoh format data yang umum digunakan antara lain HTML, XML, dan JSON.
