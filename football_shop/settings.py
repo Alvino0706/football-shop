@@ -32,6 +32,7 @@ PRODUCTION = os.getenv('PRODUCTION', 'False').lower() == 'true'
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "alvino-revaldi-footballshop.pbp.cs.ui.ac.id"]
+
 CSRF_TRUSTED_ORIGINS = [
     "https://alvino-revaldi-footballshop.pbp.cs.ui.ac.id"
 ]
