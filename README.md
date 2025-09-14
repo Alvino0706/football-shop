@@ -8,14 +8,12 @@
 ---
 
 ### 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
-
 (1) Membuat sebuah proyek Django baru.
 - Membuat direktori baru dan mengaktifkan virtual environment.
 - Menambahkan file-file yang diperlukan seperti .env, .gitignore, dll
 - Menginstall hal-hal yang diperlukan yang ditampung terlebih dahulu dalam requirements.txt
 
 (2) Membuat aplikasi dengan nama main pada proyek tersebut.
-
 - Menggunakan perintah python manage.py startapp main
 
 (3) Melakukan routing pada proyek agar dapat menjalankan aplikasi main.
@@ -109,4 +107,169 @@ Sumber: https://klc2.kemenkeu.go.id/kms/knowledge/bagaimana-mengelola-settings-p
 ### 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 Kita memerlukan data delivery dalam pengimplementasian sebuah platform karena platform hanya akan berguna jika data yang diproses dan dihasilkan dapat dikirimkan ke pihak yang membutuhkannya dengan tepat, cepat, dan aman. Dalam mengembangkan suatu platform, ada kalanya kita perlu mengirimkan data dari satu stack ke stack lainnya. Data yang dikirimkan bisa bermacam-macam bentuknya. Beberapa contoh format data yang umum digunakan antara lain HTML, XML, dan JSON.
 
+### 2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+Aspek | XML | JSON | 
+--- | --- | --- | 
+Struktur | Menggunakan tag pembuka dan penutup | Menggunakan pasangan key–value |
+Size | Lebih panjang karena banyak tag | Lebih ringkas dan ringan |
+Tipe data | Semua data berupa teks | Mendukung tipe data asli: string, number, boolean, array, object |
 
+Menurut saya, yang lebih baik antara XML dan JSON adalah JSON. Selain itu, JSON memang lebih populer dibandingkan dengan XML karena lebih mudah diproses oleh banyak bahasa pemrograman masa kini yang mana salah satunya adalah python. (Sumber: https://dasarpemrogramanpython.novalagung.com/basic/json#:~:text=Operasi%20JSON%20(%20JavaScript%20Object%20Notation%20),json%20(%20JavaScript%20Object%20Notation%20)%20.)
+
+### 3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+Method `is_valid()` pada form Django berfungsi untuk memvalidasi data yang sudah di-bind ke form. Kita membutuhkan method tersebut. Kita membutuhkan method `is_valid()` untuk memastikan input aman & benar, memberi respon error ke user, dan mencegah crash & melindungi database di mana validasi di level form mencegah pelanggaran constraint/tipe sebelum sampai ke database.
+
+### 4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+CSRF atau Cross-Site Request Forgery adalah serangan yang memungkinkan situs web jahat melakukan tindakan atas nama pengguna yang terautentikasi. Django menyediakan built-in CSRF protection. Hal ini lah alasan mengapa kita membutuhkan csrf_token saat membuat form di Django. Jika kita tidak menambahkan csrf_token pada form Django, penyerang dapat membuat browser kita melakukan aksi tanpa sepengetahuan kita. Hal ini dapat dimanfaatkan oleh penyerang dengan mengirim link ke suatu halaman dan kita membuka halaman tersebut. Selanjutnya browser akan mengirim session cookie ke form kita dan jika endpoint tidak memeriksa CSRF token, server mengeksekusi aksi (hapus produk, ganti email, transfer dana, dll).
+
+### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+(1) Tambahkan 4 fungsi views baru untuk melihat objek yang sudah ditambahkan dalam format XML, JSON, XML by ID, dan JSON by ID.
+Saya menambahkan 4 fungsi views baru untuk melihat objek yang sudah ditambahkan, dalam proyek ini objek yang dimaksud adalah product. Berikut fungsinya:
+
+    def show_xml(request):
+         product_list = Product.objects.all()
+         xml_data = serializers.serialize("xml", product_list)
+         return HttpResponse(xml_data, content_type="application/xml")
+    
+    def show_json(request):
+        product_list = Product.objects.all()
+        json_data = serializers.serialize("json", product_list)
+        return HttpResponse(json_data, content_type="application/json")
+    
+    def show_xml_by_id(request, product_id):
+       try:
+           product_item = Product.objects.filter(pk=product_id)
+           xml_data = serializers.serialize("xml", product_item)
+           return HttpResponse(xml_data, content_type="application/xml")
+       except Product.DoesNotExist:
+           return HttpResponse(status=404)
+    
+    def show_json_by_id(request, product_id):
+       try:
+           product_item = Product.objects.get(pk=product_id)
+           json_data = serializers.serialize("json", [product_item])
+           return HttpResponse(json_data, content_type="application/json")
+       except Product.DoesNotExist:
+           return HttpResponse(status=404)
+
+(2) Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 1.
+Saya membuat routing url untuk masing-masing views yang telah ditambahkan ke `urlpatterns` untuk mengakses fungsi yang sudah dibuat tadi (perlu diimpor di `urls.py`).
+
+    ...
+    path('xml/', show_xml, name='show_xml'),
+    path('json/', show_json, name='show_json'),
+    path('xml/<str:product_id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<str:product_id>/', show_json_by_id, name='show_json_by_id'),
+    ...
+
+(3) Membuat halaman yang menampilkan data objek model yang memiliki tombol "Add" yang akan redirect ke halaman form, serta tombol "Detail" pada setiap data objek model yang akan menampilkan halaman detail objek.
+Saya membuat file html (main.html) yang menampilkan data objek model yang memiliki tombol "Add" yang akan redirect ke halaman form (diteruskan ke create_product.html), serta tombol "Detail" pada setiap data objek model yang akan menampilkan halaman detail objek (diteruskan ke product_detail.html). Saya juga menampilkan kategori apakah produk tersebut, apakah produk tersebut merupakan produk unggulan, apakah produk tersebut merupakan barang baru atau bekas, harganya, dan jumlah stok yang tersedia. 
+
+Main.html:
+
+    <h1>Football Shop</h1>
+
+    <h5>NPM: </h5>
+    <p>{{ npm }}</p>
+    
+    <h5>Name:</h5>
+    <p>{{ name }}</p>
+    
+    <h5>Class:</h5>
+    <p>{{ class }}</p>
+    
+    <a href="{% url 'main:create_product' %}">
+      <button>+ Add Product</button>
+    </a>
+    
+    <hr>
+    
+    {% if not product_list %}
+    <p>Belum ada data barang pada football product.</p>
+    {% else %}
+    
+    {% for product in product_list %}
+    <div>
+      <h2><a href="{% url 'main:show_product' product.id %}">{{ product.name }}</a></h2>
+    
+      <p><b>{{ product.get_category_display }}</b>{% if product.is_featured %} | 
+        <b>Featured</b>{% endif %} | <i>{{ product.get_condition_display }} | </i>
+        Price: Rp{{ product.price }},00 | Stock: {{ product.stock }}
+      </p>
+    
+      {% if product.thumbnail %}
+      <img src="{{ product.thumbnail }}" alt="{{ product.name }} thumbnail" width="150" height="100">
+      <br />
+      {% endif %}
+    
+      <p>{{ product.content|truncatewords:25 }}...</p>
+    
+      <p><a href="{% url 'main:show_product' product.id %}"><button>Read More</button></a></p>
+    </div>
+    
+    <hr>
+    {% endfor %}
+    
+    {% endif %}
+
+create_product.html:
+
+    {% extends 'base.html' %}
+    {% block content %}
+    <h1>Add Product</h1>
+    
+    <form method="POST">
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+        <tr>
+          <td></td>
+          <td>
+            <input type="submit" value="Add PRODUCT" />
+          </td>
+        </tr>
+      </table>
+    </form>
+    
+    {% endblock %}
+
+(4) Membuat halaman form untuk menambahkan objek model pada app sebelumnya.
+Saya membuat file baru yaitu `forms.py` untuk membuat struktur form yang dapat menerima data Product baru (objek model pada app sebelumnya).
+
+    from django.forms import ModelForm
+    from main.models import Product
+    
+    class ProductForm(ModelForm):
+        class Meta:
+            model = Product
+            fields = ["name", "price", "stock", "description", "thumbnail", "category", "condition", "is_featured"]
+
+(5) Membuat halaman yang menampilkan detail dari setiap data objek model.
+Saya membuat product_detail.html:
+
+product_detail.html:
+
+    {% extends 'base.html' %}
+    {% block content %}
+    <p><a href="{% url 'main:show_main' %}"><button>← Back to Product List</button></a></p>
+    
+    <h1>{{ product.name }}</h1>
+      <p><b>{{ product.get_category_display }}</b>{% if product.is_featured %} | 
+        <b>Featured</b>{% endif %} | <i>{{ product.get_condition_display }} | </i>
+        Price: Rp{{ product.price }},00 | Stock: {{ product.stock }}
+      </p>
+    
+    {% if product.thumbnail %}
+    <img src="{{ product.thumbnail }}" alt=" {{ product.name }} thumbnail" width="300">
+    <br /><br />
+    {% endif %}
+    
+    <p>{{ product.description }}</p>
+    
+    {% endblock content %}
+
+
+### 6. Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
+Sudah sangat membantu.
+
+### Link Screenshot Postman: https://drive.google.com/drive/folders/1HNZU0pDkQ2HT68aKyJSK8if-LZ1hTSDN?usp=sharing
