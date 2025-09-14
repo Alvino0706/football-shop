@@ -1,7 +1,13 @@
 - Repo: https://github.com/Alvino0706/football-shop
 - Web: http://alvino-revaldi-footballshop.pbp.cs.ui.ac.id
 
-1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+# Answering in README.MD
+
+## Tugas 2
+
+---
+
+### 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
     (1) Membuat sebuah proyek Django baru.
         - Membuat direktori baru dan mengaktifkan virtual environment.
         - Menambahkan file-file yang diperlukan seperti .env, .gitignore, dll
@@ -40,7 +46,7 @@
 
 
 
-2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html
+### 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html
     - Bagan : https://drive.google.com/file/d/191g1Mo9yxC2ckwGg2QNfu3FM3x0PgKDO/view?usp=sharing
     (1) urls.py (Request)
         Client mengirim request ke path tertentu. urls.py mencocokkan pola URL dan mengarahkan ke view yang tepat.
@@ -55,22 +61,30 @@
     (5) Response
         HTML yang sudah dirender dikembalikan oleh view sebagai response ke client.
     
-3. Jelaskan peran settings.py dalam proyek Django!
+### 3. Jelaskan peran settings.py dalam proyek Django!
     Settings.py berfungsi untuk mengkonfigurasi berbagai aspek proyek Django. File settings.py berisi konfigurasi dan pengaturan untuk aplikasi Django seperti pengaturan basis data, aplikasi yang diinstal, jalur statis dan media, serta banyak lainnya.
     Sumber: https://klc2.kemenkeu.go.id/kms/knowledge/bagaimana-mengelola-settings-pada-sebuah-proyek-berbasis-django-1e465638/detail/
 
-4. Bagaimana cara kerja migrasi database di Django?
+### 4. Bagaimana cara kerja migrasi database di Django?
     (1) Ubah model di models.py.
     (2) Jalankan makemigrations → Django membandingkan definisi model dengan state terakhir dan membuat berkas migrasi (mis. 0002_add_field.py) berisi daftar operasi: CreateModel, AddField, AlterField, DeleteModel, dll.
     (3) Jalankan migrate → Django menyusun graf dependensi antar migrasi (lintas-app), menjalankan operasi yang belum diterapkan ke DB (eksekusi SQL), dan mencatat yang sudah dijalankan di tabel khusus django_migrations agar tidak diulang.
 
-5. Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
+### 5. Menurut Anda, dari semua framework yang ada, mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak?
     - Konvensi kuat: struktur proyek jelas (settings/urls/views/models/templates) sehingga memudahkan memahami arsitektur web modern.
     - Keamanan bawaan: proteksi CSRF, XSS, SQL injection, password hashing sehingga sejak awal belajar secure by default.
     - Produktif untuk CRUD: ORM dan admin mempercepat eksperimen konsep.
     - Skalabilitas konsep: setelah paham MVT dan middleware, mudah memahami framework lain (Flask/FastAPI, bahkan arsitektur di luar Python).
     - Ekosistem & dokumentasi: contoh dan paket banyak (rest framework, dll.), bagus untuk pemula.
 
-6. Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
+### 6. Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
     - Ritme penjelasan runut dari setup → model → view → template.
     - Live-coding membantu melihat kesalahan umum dan solusinya.
+
+
+## Tugas 3
+
+---
+
+### 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+    Kita memerlukan data delivery dalam pengimplementasian sebuah platform karena platform hanya akan berguna jika data yang diproses dan dihasilkan dapat dikirimkan ke pihak yang membutuhkannya dengan tepat, cepat, dan aman. Dalam mengembangkan suatu platform, ada kalanya kita perlu mengirimkan data dari satu stack ke stack lainnya. Data yang dikirimkan bisa bermacam-macam bentuknya. Beberapa contoh format data yang umum digunakan antara lain HTML, XML, dan JSON.
