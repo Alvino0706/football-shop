@@ -424,8 +424,8 @@ Konsep flex box dan grid layout adalah teknik modern untuk mengatur layout di CS
 
 ### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
 (1) Implementasikan fungsi untuk menghapus dan mengedit product.
-Menambahkan di views.py:
 
+Menambahkan di views.py:
 
     def edit_product(request, id):
         product = get_object_or_404(Product, pk=id)
@@ -447,124 +447,122 @@ Menambahkan di views.py:
 
 Menambahkan di urls.py:
 
-
     path('product/<uuid:id>/edit', edit_product, name='edit_product'),
     path('product/<uuid:id>/delete', delete_product, name='delete_product'),
 
 (2) Kustomisasi desain pada template HTML yang telah dibuat pada tugas-tugas sebelumnya menggunakan CSS atau CSS framework (seperti Bootstrap, Tailwind, Bulma) dengan ketentuan sebagai berikut:
 
   1. Kustomisasi halaman login, register, tambah product, edit product, dan detail product semenarik mungkin.
+     
   login.html
 
-
-      {% extends 'base.html' %}
-
-      {% block meta %}
-      <title>Login - Goal Store</title>
-      {% endblock meta %}
-
-      {% block content %}
-      <div class="bg-gray-50 w-full min-h-screen flex items-center justify-center p-8">
-        <div class="max-w-md w-full">
-          <div class="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 form-style">
-            <div class="text-center mb-8">
-              <h1 class="text-2xl font-bold text-gray-900 mb-2">Sign In</h1>
-              <p class="text-gray-600">Welcome back to Goal Store</p>
-            </div>
-
-            <!-- Form Errors Display -->
-            {% if form.non_field_errors %}
-              <div class="mb-6">
-                {% for error in form.non_field_errors %}
-                  <div class="px-4 py-3 rounded-md text-sm border bg-red-50 border-red-200 text-red-700">
-                    {{ error }}
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
-
-            {% if form.errors %}
-              <div class="mb-6">
-                {% for field, errors in form.errors.items %}
-                  {% if field != '__all__' %}
-                    {% for error in errors %}
-                      <div class="px-4 py-3 rounded-md text-sm border bg-red-50 border-red-200 text-red-700 mb-2">
-                        <strong>{{ field|title }}:</strong> {{ error }}
+              {% extends 'base.html' %}
+        
+              {% block meta %}
+              <title>Login - Goal Store</title>
+              {% endblock meta %}
+        
+              {% block content %}
+              <div class="bg-gray-50 w-full min-h-screen flex items-center justify-center p-8">
+                <div class="max-w-md w-full">
+                  <div class="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 form-style">
+                    <div class="text-center mb-8">
+                      <h1 class="text-2xl font-bold text-gray-900 mb-2">Sign In</h1>
+                      <p class="text-gray-600">Welcome back to Goal Store</p>
+                    </div>
+    
+                <!-- Form Errors Display -->
+                {% if form.non_field_errors %}
+                  <div class="mb-6">
+                    {% for error in form.non_field_errors %}
+                      <div class="px-4 py-3 rounded-md text-sm border bg-red-50 border-red-200 text-red-700">
+                        {{ error }}
                       </div>
                     {% endfor %}
-                  {% endif %}
-                {% endfor %}
-              </div>
-            {% endif %}
-
-            <form method="POST" action="" class="space-y-6">
-              {% csrf_token %}
-              
-              <div>
-                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
-                <input 
-                  id="username" 
-                  name="username" 
-                  type="text" 
-                  required 
-                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 transition-colors" 
-                  placeholder="Enter your username">
-              </div>
-
-              <div>
-                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                <input 
-                  id="password" 
-                  name="password" 
-                  type="password" 
-                  required 
-                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 transition-colors" 
-                  placeholder="Enter your password">
-              </div>
-
-              <button 
-                type="submit" 
-                class="w-full bg-green-600 text-white font-medium py-3 px-4 rounded-md hover:bg-green-700 transition-colors">
-                Sign In
-              </button>
-            </form>
-
-            <!-- Messages Display -->
-            {% if messages %}
-              <div class="mt-6">
-                {% for message in messages %}
-                  <div 
-                    class="
-                      px-4 py-3 rounded-md text-sm border
-                      {% if message.tags == 'success' %}
-                        bg-green-50 border-green-200 text-green-700
-                      {% elif message.tags == 'error' %}
-                        bg-red-50 border-red-200 text-red-700
-                      {% else %}
-                        bg-gray-50 border-gray-200 text-gray-700
-                      {% endif %}
-                    ">
-                    {{ message }}
                   </div>
-                {% endfor %}
+                {% endif %}
+    
+                {% if form.errors %}
+                  <div class="mb-6">
+                    {% for field, errors in form.errors.items %}
+                      {% if field != '__all__' %}
+                        {% for error in errors %}
+                          <div class="px-4 py-3 rounded-md text-sm border bg-red-50 border-red-200 text-red-700 mb-2">
+                            <strong>{{ field|title }}:</strong> {{ error }}
+                          </div>
+                        {% endfor %}
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+    
+                <form method="POST" action="" class="space-y-6">
+                  {% csrf_token %}
+                  
+                  <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input 
+                      id="username" 
+                      name="username" 
+                      type="text" 
+                      required 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 transition-colors" 
+                      placeholder="Enter your username">
+                  </div>
+    
+                  <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input 
+                      id="password" 
+                      name="password" 
+                      type="password" 
+                      required 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-green-500 transition-colors" 
+                      placeholder="Enter your password">
+                  </div>
+    
+                  <button 
+                    type="submit" 
+                    class="w-full bg-green-600 text-white font-medium py-3 px-4 rounded-md hover:bg-green-700 transition-colors">
+                    Sign In
+                  </button>
+                </form>
+    
+                <!-- Messages Display -->
+                {% if messages %}
+                  <div class="mt-6">
+                    {% for message in messages %}
+                      <div 
+                        class="
+                          px-4 py-3 rounded-md text-sm border
+                          {% if message.tags == 'success' %}
+                            bg-green-50 border-green-200 text-green-700
+                          {% elif message.tags == 'error' %}
+                            bg-red-50 border-red-200 text-red-700
+                          {% else %}
+                            bg-gray-50 border-gray-200 text-gray-700
+                          {% endif %}
+                        ">
+                        {{ message }}
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+    
+                <div class="mt-6 text-center pt-6 border-t border-gray-200">
+                  <p class="text-gray-500 text-sm">
+                    Don't have an account? 
+                    <a href="{% url 'main:register' %}" class="text-green-600 hover:text-green-700 font-medium">
+                      Register Now
+                    </a>
+                  </p>
+                </div>
               </div>
-            {% endif %}
-
-            <div class="mt-6 text-center pt-6 border-t border-gray-200">
-              <p class="text-gray-500 text-sm">
-                Don't have an account? 
-                <a href="{% url 'main:register' %}" class="text-green-600 hover:text-green-700 font-medium">
-                  Register Now
-                </a>
-              </p>
             </div>
           </div>
-        </div>
-      </div>
-      {% endblock content %}
+          {% endblock content %}
 
   register.html
-
 
       {% extends 'base.html' %}
       {% load static %}
@@ -671,7 +669,6 @@ Menambahkan di urls.py:
       {% endblock content %}
 
   create_product.html
-
 
       {% load static %}
       <article class="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex border border-gray-200">
@@ -807,7 +804,6 @@ Menambahkan di urls.py:
   
   product_detail.html
 
-
       {% extends 'base.html' %}
       {% load static %}
 
@@ -914,6 +910,7 @@ Menambahkan di urls.py:
 
   2. Kustomisasi halaman daftar product menjadi lebih menarik dan responsive. Kemudian, perhatikan kondisi berikut:
   - Jika pada aplikasi belum ada product yang tersimpan, halaman daftar product akan menampilkan gambar dan pesan bahwa belum ada product yang terdaftar.
+    
   main.html
 
 
@@ -932,208 +929,210 @@ Menambahkan di urls.py:
       ...
   
   - Jika sudah ada product yang tersimpan, halaman daftar product akan menampilkan detail setiap product dengan menggunakan card (tidak boleh sama persis dengan desain pada Tutorial!).
+    
   card_product.html
 
-      {% load static %}
-      <article class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
-
-        <!-- Thumbnail -->
-        <div class="relative">
-          {% if product.thumbnail %}
-            <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
-                class="w-full h-48 object-cover">
-          {% else %}
-            <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
-              No Image
-            </div>
-          {% endif %}
-          
-          <!-- Badge kategori -->
-          <div class="absolute bottom-2 left-2 flex flex-wrap gap-2">
-            <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-green-600 text-white shadow">
-              {{ product.get_category_display }}
-            </span>
-            {% if product.is_featured %}
-              <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-yellow-400 text-yellow-900 shadow">
-                Featured
-              </span>
-            {% endif %}
-            {% if product.is_product_hot %}
-              <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-red-500 text-white shadow">
-                Hot
-              </span>
-            {% endif %}
-          </div>
-        </div>
-
-        <!-- Content -->
-        <div class="flex-1 flex flex-col p-5">
-          <!-- Nama + Harga -->
-          <div class="mb-3">
-            <h3 class="text-lg font-semibold text-gray-900 mb-1 line-clamp-1">
-              <a href="{% url 'main:show_product' product.id %}" class="hover:text-green-600 transition">
-                {{ product.name }}
-              </a>
-            </h3>
-            <p class="text-green-700 font-bold text-sm">Rp {{ product.price }}</p>
-          </div>
-
-          <!-- Deskripsi -->
-          <p class="text-gray-600 text-sm leading-relaxed line-clamp-2 flex-1 mb-4">
-            {{ product.description|truncatewords:16 }}
-          </p>
-
-          <!-- Tombol Aksi -->
-          <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-            <a href="{% url 'main:show_product' product.id %}"
-              class="text-sm px-3 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
-              Read more
-            </a>
-
-            {% if user.is_authenticated and product.user == user %}
-              <div class="flex gap-2">
-                <a href="{% url 'main:edit_product' product.id %}"
-                  class="text-sm px-3 py-1.5 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition">
-                  Edit
-                </a>
-                <a href="{% url 'main:delete_product' product.id %}"
-                  class="text-sm px-3 py-1.5 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
-                  Delete
-                </a>
-              </div>
+        {% load static %}
+        <article class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+  
+          <!-- Thumbnail -->
+          <div class="relative">
+            {% if product.thumbnail %}
+              <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
+                  class="w-full h-48 object-cover">
             {% else %}
-              <form method="POST" action="{% url 'main:buy_product' product.id %}">
-                {% csrf_token %}
-                <button type="submit"
-                  class="text-sm px-3 py-1.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
-                  🛒 Buy
-                </button>
-              </form>
+              <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+                No Image
+              </div>
             {% endif %}
+            
+            <!-- Badge kategori -->
+            <div class="absolute bottom-2 left-2 flex flex-wrap gap-2">
+              <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-green-600 text-white shadow">
+                {{ product.get_category_display }}
+              </span>
+              {% if product.is_featured %}
+                <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-yellow-400 text-yellow-900 shadow">
+                  Featured
+                </span>
+              {% endif %}
+              {% if product.is_product_hot %}
+                <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-red-500 text-white shadow">
+                  Hot
+                </span>
+              {% endif %}
+            </div>
           </div>
-        </div>
-      </article>
+  
+          <!-- Content -->
+          <div class="flex-1 flex flex-col p-5">
+            <!-- Nama + Harga -->
+            <div class="mb-3">
+              <h3 class="text-lg font-semibold text-gray-900 mb-1 line-clamp-1">
+                <a href="{% url 'main:show_product' product.id %}" class="hover:text-green-600 transition">
+                  {{ product.name }}
+                </a>
+              </h3>
+              <p class="text-green-700 font-bold text-sm">Rp {{ product.price }}</p>
+            </div>
+  
+            <!-- Deskripsi -->
+            <p class="text-gray-600 text-sm leading-relaxed line-clamp-2 flex-1 mb-4">
+              {{ product.description|truncatewords:16 }}
+            </p>
+  
+            <!-- Tombol Aksi -->
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+              <a href="{% url 'main:show_product' product.id %}"
+                class="text-sm px-3 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
+                Read more
+              </a>
+  
+              {% if user.is_authenticated and product.user == user %}
+                <div class="flex gap-2">
+                  <a href="{% url 'main:edit_product' product.id %}"
+                    class="text-sm px-3 py-1.5 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition">
+                    Edit
+                  </a>
+                  <a href="{% url 'main:delete_product' product.id %}"
+                    class="text-sm px-3 py-1.5 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                    Delete
+                  </a>
+                </div>
+              {% else %}
+                <form method="POST" action="{% url 'main:buy_product' product.id %}">
+                  {% csrf_token %}
+                  <button type="submit"
+                    class="text-sm px-3 py-1.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
+                    🛒 Buy
+                  </button>
+                </form>
+              {% endif %}
+            </div>
+          </div>
+        </article>
 
   3. Untuk setiap card product, buatlah dua buah button untuk mengedit dan menghapus product pada card tersebut!
+     
   card_product.html
 
 
-      ...
-      {% if user.is_authenticated and product.user == user %}
-      <div class="flex gap-2">
-        <a href="{% url 'main:edit_product' product.id %}"
-            class="text-sm px-3 py-1.5 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition">
-          Edit
-        </a>
-        <a href="{% url 'main:delete_product' product.id %}"
-            class="text-sm px-3 py-1.5 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
-          Delete
-        </a>
-      </div>
-      ...
+          ...
+          {% if user.is_authenticated and product.user == user %}
+          <div class="flex gap-2">
+            <a href="{% url 'main:edit_product' product.id %}"
+                class="text-sm px-3 py-1.5 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition">
+              Edit
+            </a>
+            <a href="{% url 'main:delete_product' product.id %}"
+                class="text-sm px-3 py-1.5 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+              Delete
+            </a>
+          </div>
+          ...
 
-  4. Buatlah navigation bar (navbar) untuk fitur-fitur pada aplikasi yang responsive terhadap perbedaan ukuran device, khususnya mobile dan desktop.
+  5. Buatlah navigation bar (navbar) untuk fitur-fitur pada aplikasi yang responsive terhadap perbedaan ukuran device, khususnya mobile dan desktop.
+     
   navbar.html
 
-
-      {% load static %}
-      <nav class="fixed top-0 left-0 w-full bg-[#8F88B9] border-b border-black/10 shadow-sm z-50">
-
-          <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-              <!-- Logo -->
-              <a href="/">
-              <div class="flex items-center">
-                        <img src="{% static 'image/logo copy.png' %}" alt="Goal Store logo"
-                  class="h-10 w-[auto] object-contain rounded">
-              </div>
-              </a>
-              
-              <!-- Desktop Navigation -->
-              <div class="hidden md:flex items-center space-x-8">
-                <a href="/" class="text-black-600 hover:text-gray-900 font-medium transition-colors">
-                  Home
-                </a>
-                <a href="{% url 'main:create_product' %}" class="text-black-600 hover:text-gray-900 font-medium transition-colors">
-                  Create Product
-                </a>
-              </div>
-              
-              <!-- Desktop User Section -->
-              <div class="hidden md:flex items-center space-x-6">
-                {% if user.is_authenticated %}
-                  <div class="text-right">
-                    <div class="text-sm font-medium text-gray-900">{{ name|default:user.username }}</div>
-                    <div class="text-xs text-gray-500">{{ npm|default:"Student" }} - {{ class|default:"Class" }}</div>
+          {% load static %}
+          <nav class="fixed top-0 left-0 w-full bg-[#8F88B9] border-b border-black/10 shadow-sm z-50">
+    
+              <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                  <!-- Logo -->
+                  <a href="/">
+                  <div class="flex items-center">
+                            <img src="{% static 'image/logo copy.png' %}" alt="Goal Store logo"
+                      class="h-10 w-[auto] object-contain rounded">
                   </div>
-                  <a href="{% url 'main:logout' %}" class="text-red-700 hover:text-red-800 font-medium transition-colors">
-                    Logout
                   </a>
-                {% else %}
-                  <a href="{% url 'main:login' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
-                    Login
-                  </a>
-                  <a href="{% url 'main:register' %}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-medium transition-colors">
-                    Register
-                  </a>
-                {% endif %}
-              </div>
-              
-              <!-- Mobile Menu Button -->
-              <div class="md:hidden flex items-center">
-                <button class="mobile-menu-button p-2 text-gray-600 hover:text-gray-900 transition-colors">
-                  <span class="sr-only">Open menu</span>
-                  <div class="w-6 h-6 flex flex-col justify-center items-center">
-                    <span class="bg-current block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm"></span>
-                    <span class="bg-current block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5"></span>
-                    <span class="bg-current block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm"></span>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- Mobile Menu -->
-          <div class="mobile-menu hidden md:hidden bg-white border-t border-gray-200">
-            <div class="px-6 py-4 space-y-4">
-              <!-- Mobile Navigation Links -->
-              <div class="space-y-1">
-                <a href="/" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">
-                  Home
-                </a>
-                <a href="{% url 'main:create_product' %}" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">
-                  Create Product
-                </a>
-              </div>
-              
-              <!-- Mobile User Section -->
-              <div class="border-t border-gray-200 pt-4">
-                {% if user.is_authenticated %}
-                  <div class="mb-4">
-                    <div class="font-medium text-gray-900">{{ name|default:user.username }}</div>
-                    <div class="text-sm text-gray-500">{{ npm|default:"Student" }} - {{ class|default:"Class" }}</div>
-                  </div>
-                  <a href="{% url 'main:logout' %}" class="block text-red-600 hover:text-red-700 font-medium py-3 transition-colors">
-                    Logout
-                  </a>
-                {% else %}
-                  <div class="space-y-3">
-                    <a href="{% url 'main:login' %}" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">
-                      Login
+                  
+                  <!-- Desktop Navigation -->
+                  <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-black-600 hover:text-gray-900 font-medium transition-colors">
+                      Home
                     </a>
-                    <a href="{% url 'main:register' %}" class="block bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded text-center transition-colors">
-                      Register
+                    <a href="{% url 'main:create_product' %}" class="text-black-600 hover:text-gray-900 font-medium transition-colors">
+                      Create Product
                     </a>
                   </div>
-                {% endif %}
+                  
+                  <!-- Desktop User Section -->
+                  <div class="hidden md:flex items-center space-x-6">
+                    {% if user.is_authenticated %}
+                      <div class="text-right">
+                        <div class="text-sm font-medium text-gray-900">{{ name|default:user.username }}</div>
+                        <div class="text-xs text-gray-500">{{ npm|default:"Student" }} - {{ class|default:"Class" }}</div>
+                      </div>
+                      <a href="{% url 'main:logout' %}" class="text-red-700 hover:text-red-800 font-medium transition-colors">
+                        Logout
+                      </a>
+                    {% else %}
+                      <a href="{% url 'main:login' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+                        Login
+                      </a>
+                      <a href="{% url 'main:register' %}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-medium transition-colors">
+                        Register
+                      </a>
+                    {% endif %}
+                  </div>
+                  
+                  <!-- Mobile Menu Button -->
+                  <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button p-2 text-gray-600 hover:text-gray-900 transition-colors">
+                      <span class="sr-only">Open menu</span>
+                      <div class="w-6 h-6 flex flex-col justify-center items-center">
+                        <span class="bg-current block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm"></span>
+                        <span class="bg-current block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5"></span>
+                        <span class="bg-current block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm"></span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <script>
-            const btn = document.querySelector("button.mobile-menu-button");
-            const menu = document.querySelector(".mobile-menu");
-          
-            btn.addEventListener("click", () => {
-              menu.classList.toggle("hidden");
-            });
-          </script>
-        </nav>
+              <!-- Mobile Menu -->
+              <div class="mobile-menu hidden md:hidden bg-white border-t border-gray-200">
+                <div class="px-6 py-4 space-y-4">
+                  <!-- Mobile Navigation Links -->
+                  <div class="space-y-1">
+                    <a href="/" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">
+                      Home
+                    </a>
+                    <a href="{% url 'main:create_product' %}" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">
+                      Create Product
+                    </a>
+                  </div>
+                  
+                  <!-- Mobile User Section -->
+                  <div class="border-t border-gray-200 pt-4">
+                    {% if user.is_authenticated %}
+                      <div class="mb-4">
+                        <div class="font-medium text-gray-900">{{ name|default:user.username }}</div>
+                        <div class="text-sm text-gray-500">{{ npm|default:"Student" }} - {{ class|default:"Class" }}</div>
+                      </div>
+                      <a href="{% url 'main:logout' %}" class="block text-red-600 hover:text-red-700 font-medium py-3 transition-colors">
+                        Logout
+                      </a>
+                    {% else %}
+                      <div class="space-y-3">
+                        <a href="{% url 'main:login' %}" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">
+                          Login
+                        </a>
+                        <a href="{% url 'main:register' %}" class="block bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded text-center transition-colors">
+                          Register
+                        </a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <script>
+                const btn = document.querySelector("button.mobile-menu-button");
+                const menu = document.querySelector(".mobile-menu");
+              
+                btn.addEventListener("click", () => {
+                  menu.classList.toggle("hidden");
+                });
+              </script>
+            </nav>
