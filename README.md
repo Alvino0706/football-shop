@@ -394,7 +394,7 @@ dan mengubah return pada kedua fungsi tersebut menjadi `return response`. Pada f
 (5) Urutan terakhir dalam file CSS. Jika specificity sama, aturan paling akhir yang menang (the cascade).
 
 ### 2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
-Responsive design adalah desain web yang menyesuaikan tampilan sesuai ukuran layar (desktop, tablet, smartphone). Hal ini penting user-user sekarang banyak mengakses web dari berbagai device. Contoh yang sudah responsive adalah Shopee karena tampilan grid produk otomatis menyesuaikan layar HP maupun desktop. Contoh yang belum adalah
+Responsive design adalah desain web yang menyesuaikan tampilan sesuai ukuran layar (desktop, tablet, smartphone). Hal ini penting user-user sekarang banyak mengakses web dari berbagai device. Contoh yang sudah responsive adalah Shopee karena tampilan grid produk otomatis menyesuaikan layar HP maupun desktop. Contoh yang belum responsive adalah website lama berbasis HTML tabel (misalnya situs berita jadul) → di layar HP teks terlalu kecil, harus zoom in/out, tombol sulit ditekan, seperti https://rawpowerlifting.com/
 
 ### 3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
 - Margin = jarak di luar border, memisahkan elemen dengan elemen lain.
