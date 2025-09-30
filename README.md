@@ -413,6 +413,7 @@ Cara implementasi:
 
 ### 4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
 Konsep flex box dan grid layout adalah teknik modern untuk mengatur layout di CSS.
+
 (1) Flexbox (Flexible Box Layout): 
 - Digunakan untuk mengatur layout 1 dimensi (horizontal atau vertikal).
 - Cocok untuk navbar, alignment item dalam baris/kolom.
@@ -424,6 +425,8 @@ Konsep flex box dan grid layout adalah teknik modern untuk mengatur layout di CS
 ### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
 (1) Implementasikan fungsi untuk menghapus dan mengedit product.
 Menambahkan di views.py:
+
+
     def edit_product(request, id):
         product = get_object_or_404(Product, pk=id)
         form = ProductForm(request.POST or None, instance=product)
@@ -443,6 +446,8 @@ Menambahkan di views.py:
         return HttpResponseRedirect(reverse('main:show_main'))
 
 Menambahkan di urls.py:
+
+
     path('product/<uuid:id>/edit', edit_product, name='edit_product'),
     path('product/<uuid:id>/delete', delete_product, name='delete_product'),
 
@@ -451,7 +456,8 @@ Menambahkan di urls.py:
   1. Kustomisasi halaman login, register, tambah product, edit product, dan detail product semenarik mungkin.
   login.html
 
-        {% extends 'base.html' %}
+
+      {% extends 'base.html' %}
 
       {% block meta %}
       <title>Login - Goal Store</title>
@@ -559,6 +565,7 @@ Menambahkan di urls.py:
 
   register.html
 
+
       {% extends 'base.html' %}
       {% load static %}
 
@@ -665,246 +672,250 @@ Menambahkan di urls.py:
 
   create_product.html
 
+
       {% load static %}
-    <article class="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex border border-gray-200">
-      
-      <!-- Thumbnail -->
-      <div class="w-1/3 relative">
-        {% if product.thumbnail %}
-          <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
-              class="w-full h-full object-cover">
-        {% else %}
-          <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
-            No Image
-          </div>
-        {% endif %}
+      <article class="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex border border-gray-200">
         
-        <!-- Badge kategori -->
-        <div class="absolute top-2 left-2">
-          <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-green-600 text-white shadow">
-            {{ product.get_category_display }}
-          </span>
-        </div>
-      </div>
-
-      <!-- Content -->
-      <div class="w-2/3 flex flex-col p-4">
-        <!-- Nama + Harga -->
-        <div class="mb-2">
-          <h3 class="text-base font-semibold text-gray-900 line-clamp-1">
-            <a href="{% url 'main:show_product' product.id %}" class="hover:text-green-600 transition">
-              {{ product.name }}
-            </a>
-          </h3>
-          <p class="text-green-700 font-bold text-sm">Rp {{ product.price }}</p>
-        </div>
-
-        <!-- Deskripsi -->
-        <p class="text-gray-600 text-xs leading-relaxed line-clamp-2 flex-1 mb-3">
-          {{ product.description|truncatewords:18 }}
-        </p>
-
-        <!-- Action Buttons -->
-        <div class="flex items-center justify-between">
-          <a href="{% url 'main:show_product' product.id %}"
-            class="text-xs px-3 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
-            Read more
-          </a>
-
-          {% if user.is_authenticated and product.user == user %}
-            <div class="flex gap-2">
-              <a href="{% url 'main:edit_product' product.id %}"
-                class="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">
-                Edit
-              </a>
-              <a href="{% url 'main:delete_product' product.id %}"
-                class="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition">
-                Delete
-              </a>
-            </div>
+        <!-- Thumbnail -->
+        <div class="w-1/3 relative">
+          {% if product.thumbnail %}
+            <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
+                class="w-full h-full object-cover">
           {% else %}
-            <form method="POST" action="{% url 'main:buy_product' product.id %}">
-              {% csrf_token %}
-              <button type="submit"
-                class="text-xs px-3 py-1.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
-                🛒 Buy
-              </button>
-            </form>
+            <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
+              No Image
+            </div>
           {% endif %}
+          
+          <!-- Badge kategori -->
+          <div class="absolute top-2 left-2">
+            <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-green-600 text-white shadow">
+              {{ product.get_category_display }}
+            </span>
+          </div>
         </div>
-      </div>
-    </article>
+
+        <!-- Content -->
+        <div class="w-2/3 flex flex-col p-4">
+          <!-- Nama + Harga -->
+          <div class="mb-2">
+            <h3 class="text-base font-semibold text-gray-900 line-clamp-1">
+              <a href="{% url 'main:show_product' product.id %}" class="hover:text-green-600 transition">
+                {{ product.name }}
+              </a>
+            </h3>
+            <p class="text-green-700 font-bold text-sm">Rp {{ product.price }}</p>
+          </div>
+
+          <!-- Deskripsi -->
+          <p class="text-gray-600 text-xs leading-relaxed line-clamp-2 flex-1 mb-3">
+            {{ product.description|truncatewords:18 }}
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center justify-between">
+            <a href="{% url 'main:show_product' product.id %}"
+              class="text-xs px-3 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
+              Read more
+            </a>
+
+            {% if user.is_authenticated and product.user == user %}
+              <div class="flex gap-2">
+                <a href="{% url 'main:edit_product' product.id %}"
+                  class="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">
+                  Edit
+                </a>
+                <a href="{% url 'main:delete_product' product.id %}"
+                  class="text-xs px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition">
+                  Delete
+                </a>
+              </div>
+            {% else %}
+              <form method="POST" action="{% url 'main:buy_product' product.id %}">
+                {% csrf_token %}
+                <button type="submit"
+                  class="text-xs px-3 py-1.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
+                  🛒 Buy
+                </button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </article>
 
   edit_product.html
 
-    {% extends 'base.html' %}
-    {% load static %}
 
-    {% block meta %}
-    <title>Edit Product - Goal Store</title>
-    {% endblock meta %}
+      {% extends 'base.html' %}
+      {% load static %}
 
-    {% block content %}
-    {% include 'navbar.html' %}
-    <div class="bg-gray-50 w-full min-h-screen">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- Back Navigation -->
-        <div class="mb-6">
-          <a href="{% url 'main:show_main' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
-            ← Back to Store
-          </a>
-        </div>
-        
-        <!-- Form -->
-        <div class="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 form-style">
-          <div class="mb-8">
-            <h1 class="text-2xl font-bold text-gray-900 mb-2">Edit Product</h1>
-            <p class="text-gray-600">Update your product</p>
+      {% block meta %}
+      <title>Edit Product - Goal Store</title>
+      {% endblock meta %}
+
+      {% block content %}
+      {% include 'navbar.html' %}
+      <div class="bg-gray-50 w-full min-h-screen">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          
+          <!-- Back Navigation -->
+          <div class="mb-6">
+            <a href="{% url 'main:show_main' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+              ← Back to Store
+            </a>
           </div>
           
-          <form method="POST" class="space-y-6">
-            {% csrf_token %}
-            {% for field in form %}
-              <div>
-                <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                  {{ field.label }}
-                </label>
-                <div class="w-full">
-                  {{ field }}
-                </div>
-                {% if field.help_text %}
-                  <p class="mt-1 text-sm text-gray-500">{{ field.help_text }}</p>
-                {% endif %}
-                {% for error in field.errors %}
-                  <p class="mt-1 text-sm text-red-600">{{ error }}</p>
-                {% endfor %}
-              </div>
-            {% endfor %}
-            
-            <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
-              <a href="{% url 'main:show_main' %}" class="order-2 sm:order-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-50 transition-colors text-center">
-                Cancel
-              </a>
-              <button type="submit" class="order-1 sm:order-2 flex-1 bg-green-600 text-white px-6 py-3 rounded-md font-medium hover:bg-green-700 transition-colors">
-                Update Product
-              </button>
+          <!-- Form -->
+          <div class="bg-white rounded-lg border border-gray-200 p-6 sm:p-8 form-style">
+            <div class="mb-8">
+              <h1 class="text-2xl font-bold text-gray-900 mb-2">Edit Product</h1>
+              <p class="text-gray-600">Update your product</p>
             </div>
-          </form>
+            
+            <form method="POST" class="space-y-6">
+              {% csrf_token %}
+              {% for field in form %}
+                <div>
+                  <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                    {{ field.label }}
+                  </label>
+                  <div class="w-full">
+                    {{ field }}
+                  </div>
+                  {% if field.help_text %}
+                    <p class="mt-1 text-sm text-gray-500">{{ field.help_text }}</p>
+                  {% endif %}
+                  {% for error in field.errors %}
+                    <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              {% endfor %}
+              
+              <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+                <a href="{% url 'main:show_main' %}" class="order-2 sm:order-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-50 transition-colors text-center">
+                  Cancel
+                </a>
+                <button type="submit" class="order-1 sm:order-2 flex-1 bg-green-600 text-white px-6 py-3 rounded-md font-medium hover:bg-green-700 transition-colors">
+                  Update Product
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-    {% endblock %}
+      {% endblock %}
   
   product_detail.html
 
-    {% extends 'base.html' %}
-    {% load static %}
 
-    {% block meta %}
-    <title>{{ product.name }} - Goal Store</title>
-    {% endblock meta %}
+      {% extends 'base.html' %}
+      {% load static %}
 
-    {% block content %}
-    {% include 'navbar.html' %}
-    <div class="bg-gray-50 w-full min-h-screen">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            
-            <!-- Back Navigation -->
-            <div class="mb-6">
-                <a href="{% url 'main:show_main' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
-                    ← Back to Store
-                </a>
-            </div>
-            
-            <!-- Article -->
-            <article class="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                
-                <!-- Header -->
-                <div class="p-6 sm:p-8">
-                    <div class="flex flex-wrap items-center gap-2 mb-4">
-                        <span class="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-green-600 text-white">
-                            {{ product.get_category_display }}
-                        </span>
-                        {% if product.is_featured %}
-                            <span class="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-yellow-100 text-yellow-800">
-                                Featured
-                            </span>
-                        {% endif %}
-                        {% if product.is_product_hot %}
-                            <span class="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800">
-                                Hot
-                            </span>
-                        {% endif %}
-                    </div>
-                    
-                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4">
-                        {{ product.name }}
-                    </h1>
-                    
-                    <div class="flex flex-wrap items-center text-sm text-gray-500 gap-4">
-                        <p><b>{{ product.get_category_display }}</b>{% if product.is_featured %} | 
-                            <b>Featured</b>{% endif %} | <i>{{ product.get_condition_display }} | </i>
-                            Price: Rp{{ product.price }},00 | Stock: {{ product.stock }}
-                        </p>
-                    </div>
-                </div>
+      {% block meta %}
+      <title>{{ product.name }} - Goal Store</title>
+      {% endblock meta %}
 
-                <!-- Featured Image -->
-                {% if product.thumbnail %}
-                    <div class="px-6 sm:px-8">
-                        <img src="{{ product.thumbnail }}" 
-                            alt="{{ product.name }}" 
-                            class="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg">
-                    </div>
-                {% endif %}
+      {% block content %}
+      {% include 'navbar.html' %}
+      <div class="bg-gray-50 w-full min-h-screen">
+          <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              
+              <!-- Back Navigation -->
+              <div class="mb-6">
+                  <a href="{% url 'main:show_main' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+                      ← Back to Store
+                  </a>
+              </div>
+              
+              <!-- Article -->
+              <article class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                  
+                  <!-- Header -->
+                  <div class="p-6 sm:p-8">
+                      <div class="flex flex-wrap items-center gap-2 mb-4">
+                          <span class="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-green-600 text-white">
+                              {{ product.get_category_display }}
+                          </span>
+                          {% if product.is_featured %}
+                              <span class="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-yellow-100 text-yellow-800">
+                                  Featured
+                              </span>
+                          {% endif %}
+                          {% if product.is_product_hot %}
+                              <span class="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800">
+                                  Hot
+                              </span>
+                          {% endif %}
+                      </div>
+                      
+                      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4">
+                          {{ product.name }}
+                      </h1>
+                      
+                      <div class="flex flex-wrap items-center text-sm text-gray-500 gap-4">
+                          <p><b>{{ product.get_category_display }}</b>{% if product.is_featured %} | 
+                              <b>Featured</b>{% endif %} | <i>{{ product.get_condition_display }} | </i>
+                              Price: Rp{{ product.price }},00 | Stock: {{ product.stock }}
+                          </p>
+                      </div>
+                  </div>
 
-                <!-- Content -->
-                <div class="p-6 sm:p-8">
-                    <div class="prose prose-lg max-w-none">
-                        <div class="text-gray-700 leading-relaxed whitespace-pre-line text-base sm:text-lg">
-                            <p>{{ product.description }}</p>
-                        </div>
-                    </div>
-                </div>
+                  <!-- Featured Image -->
+                  {% if product.thumbnail %}
+                      <div class="px-6 sm:px-8">
+                          <img src="{{ product.thumbnail }}" 
+                              alt="{{ product.name }}" 
+                              class="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg">
+                      </div>
+                  {% endif %}
 
-                <!-- Author Info -->
-                <div class="border-t border-gray-200 p-6 sm:p-8 bg-gray-50">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <div class="font-medium text-gray-900">
-                                {% if product.user %}
-                                    <p>Author: {{ product.user.username }}</p>
-                                {% else %}
-                                    <p>Author: Anonymous</p>
-                                {% endif %}
-                            </div>
-                            <p class="text-sm text-gray-500">Author</p>
-                        </div>
-                    </div>
-                </div>
+                  <!-- Content -->
+                  <div class="p-6 sm:p-8">
+                      <div class="prose prose-lg max-w-none">
+                          <div class="text-gray-700 leading-relaxed whitespace-pre-line text-base sm:text-lg">
+                              <p>{{ product.description }}</p>
+                          </div>
+                      </div>
+                  </div>
 
-                <div class="border-t border-gray-200 p-6 sm:p-8 bg-white">
-                    <div class="flex justify-end">
-                        <form action="{% url 'main:buy_product' product.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit"
-                            class="inline-flex items-center px-6 py-3 bg-green-600 text-white text-lg font-medium rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition">
-                            🛒 Buy Now
-                        </button>
-                        </form>
-                    </div>
-                </div>
-            </article>
-            
-        </div>
+                  <!-- Author Info -->
+                  <div class="border-t border-gray-200 p-6 sm:p-8 bg-gray-50">
+                      <div class="flex items-center justify-between">
+                          <div>
+                              <div class="font-medium text-gray-900">
+                                  {% if product.user %}
+                                      <p>Author: {{ product.user.username }}</p>
+                                  {% else %}
+                                      <p>Author: Anonymous</p>
+                                  {% endif %}
+                              </div>
+                              <p class="text-sm text-gray-500">Author</p>
+                          </div>
+                      </div>
+                  </div>
 
-    </div>
-    {% endblock content %}
+                  <div class="border-t border-gray-200 p-6 sm:p-8 bg-white">
+                      <div class="flex justify-end">
+                          <form action="{% url 'main:buy_product' product.id %}" method="POST">
+                          {% csrf_token %}
+                          <button type="submit"
+                              class="inline-flex items-center px-6 py-3 bg-green-600 text-white text-lg font-medium rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition">
+                              🛒 Buy Now
+                          </button>
+                          </form>
+                      </div>
+                  </div>
+              </article>
+              
+          </div>
+
+      </div>
+      {% endblock content %}
 
   2. Kustomisasi halaman daftar product menjadi lebih menarik dan responsive. Kemudian, perhatikan kondisi berikut:
   - Jika pada aplikasi belum ada product yang tersimpan, halaman daftar product akan menampilkan gambar dan pesan bahwa belum ada product yang terdaftar.
   main.html
+
 
       ...
       {% if not product_list %}
@@ -1006,6 +1017,7 @@ Menambahkan di urls.py:
   3. Untuk setiap card product, buatlah dua buah button untuk mengedit dan menghapus product pada card tersebut!
   card_product.html
 
+
       ...
       {% if user.is_authenticated and product.user == user %}
       <div class="flex gap-2">
@@ -1022,6 +1034,7 @@ Menambahkan di urls.py:
 
   4. Buatlah navigation bar (navbar) untuk fitur-fitur pada aplikasi yang responsive terhadap perbedaan ukuran device, khususnya mobile dan desktop.
   navbar.html
+
 
       {% load static %}
       <nav class="fixed top-0 left-0 w-full bg-[#8F88B9] border-b border-black/10 shadow-sm z-50">
