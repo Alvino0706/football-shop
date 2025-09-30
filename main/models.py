@@ -10,6 +10,7 @@ class Product(models.Model):
         ('topi', 'Topi'),
         ('celana', 'Celana'),
         ('botol minum', 'Botol Minum'),
+        ('bola', 'Bola')
     ]
 
     CONDITION_CHOICES = [

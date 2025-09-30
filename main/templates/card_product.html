@@ -1,0 +1,79 @@
+{% load static %}
+<article class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
+
+  <!-- Thumbnail -->
+  <div class="relative">
+    {% if product.thumbnail %}
+      <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
+           class="w-full h-48 object-cover">
+    {% else %}
+      <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+        No Image
+      </div>
+    {% endif %}
+    
+    <!-- Badge kategori -->
+    <div class="absolute bottom-2 left-2 flex flex-wrap gap-2">
+      <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-green-600 text-white shadow">
+        {{ product.get_category_display }}
+      </span>
+      {% if product.is_featured %}
+        <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-yellow-400 text-yellow-900 shadow">
+          Featured
+        </span>
+      {% endif %}
+      {% if product.is_product_hot %}
+        <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-red-500 text-white shadow">
+          Hot
+        </span>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1 flex flex-col p-5">
+    <!-- Nama + Harga -->
+    <div class="mb-3">
+      <h3 class="text-lg font-semibold text-gray-900 mb-1 line-clamp-1">
+        <a href="{% url 'main:show_product' product.id %}" class="hover:text-green-600 transition">
+          {{ product.name }}
+        </a>
+      </h3>
+      <p class="text-green-700 font-bold text-sm">Rp {{ product.price }}</p>
+    </div>
+
+    <!-- Deskripsi -->
+    <p class="text-gray-600 text-sm leading-relaxed line-clamp-2 flex-1 mb-4">
+      {{ product.description|truncatewords:16 }}
+    </p>
+
+    <!-- Tombol Aksi -->
+    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+      <a href="{% url 'main:show_product' product.id %}"
+         class="text-sm px-3 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
+        Read more
+      </a>
+
+      {% if user.is_authenticated and product.user == user %}
+        <div class="flex gap-2">
+          <a href="{% url 'main:edit_product' product.id %}"
+             class="text-sm px-3 py-1.5 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition">
+            Edit
+          </a>
+          <a href="{% url 'main:delete_product' product.id %}"
+             class="text-sm px-3 py-1.5 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+            Delete
+          </a>
+        </div>
+      {% else %}
+        <form method="POST" action="{% url 'main:buy_product' product.id %}">
+          {% csrf_token %}
+          <button type="submit"
+             class="text-sm px-3 py-1.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
+            🛒 Buy
+          </button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</article>
