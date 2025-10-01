@@ -31,7 +31,7 @@
             {% if field != '__all__' %}
               {% for error in errors %}
                 <div class="px-4 py-3 rounded text-sm border bg-red-50 border-red-200 text-red-700 mb-2">
-                  <strong>{{ field|name }}:</strong> {{ error }}
+                  <strong>{{ field }}:</strong> {{ error }}
                 </div>
               {% endfor %}
             {% endif %}
