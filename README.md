@@ -1,5 +1,5 @@
 - Repo: https://github.com/Alvino0706/football-shop
-- Web: http://alvin-revaldi-footballshop.pbp.cs.ui.ac.id
+- Web: http://alvino-revaldi-footballshop.pbp.cs.ui.ac.id
 
 # Answering in README.MD
 
