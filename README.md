@@ -1136,3 +1136,39 @@ Menambahkan di urls.py:
                 });
               </script>
             </nav>
+
+## Tugas 6
+
+---
+
+### 1. Apa perbedaan antara synchronous request dan asynchronous request?
+- Synchronous request: Browser menunggu respons dari server sebelum melanjutkan eksekusi kode berikutnya. Hal ini membuat halaman bisa terasa “terhenti” sementara.
+- Asynchronous request (AJAX): Browser tidak perlu menunggu respons dari server untuk melanjutkan eksekusi kode. Proses pengiriman dan penerimaan data terjadi di latar belakang (background) sehingga halaman tidak perlu dimuat ulang.
+
+### 2. Bagaimana AJAX bekerja di Django (alur request–response)?
+(1) User melakukan aksi di halaman (misalnya klik tombol).
+(2) JavaScript/AJAX mengirim request (biasanya JSON) ke URL endpoint Django (misalnya view khusus dengan @require_POST).
+(3) View Django memproses data dan mengembalikan response JSON.
+(4) AJAX menerima respons tanpa reload halaman dan memperbarui DOM (bagian halaman tertentu) sesuai data yang diterima.
+
+Alur:
+User action → AJAX request → Django view → JSON response → Update halaman
+
+### 3. Apa keuntungan menggunakan AJAX dibandingkan render biasa di Django?
+- Tidak perlu reload seluruh halaman, hanya bagian tertentu yang diperbarui.
+- Lebih cepat dan efisien karena menghemat bandwidth.
+- Meningkatkan interaktivitas dan responsivitas website.
+- Dapat digunakan untuk membuat fitur real-time seperti notifikasi, live search, dll.
+
+### 4. Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
+- Selalu sertakan CSRF token dalam setiap request AJAX POST.
+- Validasi input di server-side (bukan hanya di frontend).
+- Gunakan HTTPS agar data sensitif terenkripsi.
+- Batasi akses URL dengan @login_required atau permission checks.
+- Jangan tampilkan informasi sensitif dalam response JSON (misalnya password, token session, dll).
+
+### 5. Bagaimana AJAX mempengaruhi pengalaman pengguna (User Experience) pada website?
+- Memberikan transisi yang lebih halus tanpa reload halaman.
+- Membuat website terasa lebih cepat dan interaktif.
+- Meningkatkan kenyamanan pengguna karena hanya bagian yang relevan diperbarui.
+- Namun, perlu diatur agar feedback/error handling tetap jelas agar pengguna tahu apa yang terjadi di belakang layar.
