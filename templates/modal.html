@@ -1,112 +1,237 @@
-<!-- Modal -->
+<!-- Modal Create Product -->
 <div id="crudModal" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50">
   <div id="crudModalContent" class="bg-white rounded-lg shadow-lg w-5/6 sm:w-3/5 md:w-1/2 lg:w-2/5 xl:w-1/3 max-h-screen overflow-y-auto">
     <!-- Modal header -->
     <div class="flex items-center justify-between p-4 border-b">
       <div>
-        <h3 class="text-xl font-semibold text-gray-900">
-          Create New Product
-        </h3>
+        <h3 class="text-xl font-semibold text-gray-900">Create New Product</h3>
         <p class="text-sm text-gray-600 mt-1">Provide your favorite football things</p>
       </div>
-      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="hideModal()">
-        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-        </svg>
-        <span class="sr-only">Close modal</span>
-      </button>
+      <button type="button" class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg p-1.5" onclick="hideModal()">✖</button>
     </div>
+
     <!-- Modal body -->
-    <div class="px-6 py-4 space-y-6 form-style">
-      <form id="productForm">
-        <div class="mb-4">
-          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-          <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Enter product name" required>
+    <form id="productForm" class="px-6 py-4 space-y-6 form-style">
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+        <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="Enter product name" required>
+      </div>
+
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+        <textarea id="description" name="description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="Enter product description" required></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+          <input type="number" id="price" name="price" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
         </div>
-        <div class="mb-4">
-          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-          <textarea id="description" name="description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Enter product description" required></textarea>
+        <div>
+          <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
+          <input type="number" id="stock" name="stock" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
         </div>
-        <div class="mb-4">
-          <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-          <select id="category" name="category" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" required>
-            <option value="">Choose a category</option>
-            <option value="jersey">Jersey</option>
-            <option value="Update">Update</option>
-            <option value="sepatu">Sepatu</option>
-            <option value="topi">Topi</option>
-            <option value="celana">Celana</option>
-            <option value="botol minum">Botol Minum</option>
-            <option value="bola">Bola</option>
-          </select>
-        </div>
-        <div class="mb-4">
-          <label for="condition" class="block text-sm font-medium text-gray-700">Condition</label>
-          <select id="condition" name="condition" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" required>
-            <option value="">Choose a condition</option>
-            <option value="baru">Baru</option>
-            <option value="bekas">Bekas</option>
-          </select>
-        </div>
-        <div class="mb-4">
-          <label for="thumbnail" class="block text-sm font-medium text-gray-700">Thumbnail URL</label>
-          <input type="url" id="thumbnail" name="thumbnail" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" placeholder="https://example.com/image.jpg">
-        </div>
-        <div class="mb-4">
-          <div class="flex items-center">
-            <input id="is_featured" name="is_featured" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
-            <label for="is_featured" class="ml-2 text-sm font-medium text-gray-900">Featured Product</label>
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+
+      <div>
+        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+        <select id="category" name="category" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+          <option value="">Choose a category</option>
+          <option value="jersey">Jersey</option>
+          <option value="update">Update</option>
+          <option value="sepatu">Sepatu</option>
+          <option value="topi">Topi</option>
+          <option value="celana">Celana</option>
+          <option value="botol minum">Botol Minum</option>
+          <option value="bola">Bola</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="condition" class="block text-sm font-medium text-gray-700">Condition</label>
+        <select id="condition" name="condition" class="w-full px-3 py-2 border border-gray-300 rounded-md" required>
+          <option value="">Choose a condition</option>
+          <option value="baru">Baru</option>
+          <option value="bekas">Bekas</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="thumbnail" class="block text-sm font-medium text-gray-700">Thumbnail URL</label>
+        <input type="url" id="thumbnail" name="thumbnail" class="w-full px-3 py-2 border border-gray-300 rounded-md" placeholder="https://example.com/image.jpg">
+      </div>
+
+      <div class="flex items-center">
+        <input id="is_featured" name="is_featured" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded">
+        <label for="is_featured" class="ml-2 text-sm text-gray-700">Featured Product</label>
+      </div>
+    </form>
+
     <!-- Modal footer -->
     <div class="flex flex-col sm:flex-row gap-4 p-6 border-t border-gray-200 rounded-b">
-      <button type="button" id="cancelButton" class="order-2 sm:order-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-50 transition-colors text-center" onclick="hideModal()">Cancel</button>
-      <button type="submit" id="submitProduct" form="productForm" class="order-1 sm:order-2 flex-1 bg-green-600 text-white px-6 py-3 rounded-md font-medium hover:bg-green-700 transition-colors">Publish Product</button>
+      <button type="button" class="order-2 sm:order-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-50 transition" onclick="hideModal()">Cancel</button>
+      <button type="submit" form="productForm" class="order-1 sm:order-2 flex-1 bg-green-600 text-white px-6 py-3 rounded-md font-medium hover:bg-green-700 transition">Publish Product</button>
     </div>
   </div>
 </div>
 
 <script>
+  // Show & Hide modal
   function showModal() {
-      const modal = document.getElementById('crudModal');
-      const modalContent = document.getElementById('crudModalContent');
-
-      modal.classList.remove('hidden'); 
-      setTimeout(() => {
-        modalContent.classList.remove('opacity-0', 'scale-95');
-        modalContent.classList.add('opacity-100', 'scale-100');
-      }, 50); 
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modalContent.classList.remove('opacity-0', 'scale-95');
+      modalContent.classList.add('opacity-100', 'scale-100');
+    }, 50);
   }
 
   function hideModal() {
-      const modal = document.getElementById('crudModal');
-      const modalContent = document.getElementById('crudModalContent');
-
-      modalContent.classList.remove('opacity-100', 'scale-100');
-      modalContent.classList.add('opacity-0', 'scale-95');
-
-      setTimeout(() => {
-        modal.classList.add('hidden');
-      }, 150); 
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+    modalContent.classList.remove('opacity-100', 'scale-100');
+    modalContent.classList.add('opacity-0', 'scale-95');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 150);
   }
 
- async function addProductEntry() {
-    await fetch("{% url 'main:add_product_entry_ajax' %}", {
+  // Handle Create Product via AJAX
+  document.getElementById("productForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const res = await fetch("{% url 'main:add_product_entry_ajax' %}", {
       method: "POST",
-      body: new FormData(document.querySelector('#productForm')),
-    })
+      body: new FormData(form),
+    });
 
-    document.getElementById("productForm").reset();
-    hideModal();
-      
-    // Show toast notification
-    showToast('Product added successfully!', '', 'success');
-
-    // Dispatch custom event to notify main.html about new data
-    document.dispatchEvent(new CustomEvent('newsAdded'));
-
-    return false;
-  }
+    if (res.ok) {
+      showToast("Success", "Product added successfully!", "success");
+      document.dispatchEvent(new Event("productChanged")); // trigger refresh
+      form.reset();
+      hideModal();
+    } else {
+      showToast("Error", "Failed to add product", "error");
+    }
+  });
 </script>
+<!-- Modal Edit Product -->
+<div id="editModal" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+  <div id="editModalContent" class="bg-white rounded-lg shadow-lg w-5/6 sm:w-3/5 md:w-1/2 max-h-screen overflow-y-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-4 border-b">
+      <div>
+        <h3 class="text-xl font-semibold text-gray-900">Edit Product</h3>
+        <p class="text-sm text-gray-600 mt-1">Update your football product information</p>
+      </div>
+      <button type="button" class="text-gray-400 hover:text-gray-900 rounded-lg p-1.5" onclick="hideEditModal()">✖</button>
+    </div>
+
+    <!-- Form -->
+    <form id="editProductForm" class="px-6 py-4 space-y-4 form-style">
+      <input type="hidden" id="editId" name="id" />
+
+      <div>
+        <label for="editName" class="block text-sm font-medium text-gray-700">Name</label>
+        <input id="editName" name="name" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="editPrice" class="block text-sm font-medium text-gray-700">Price</label>
+          <input id="editPrice" name="price" type="number" required class="w-full px-3 py-2 border border-gray-300 rounded-md" />
+        </div>
+        <div>
+          <label for="editStock" class="block text-sm font-medium text-gray-700">Stock</label>
+          <input id="editStock" name="stock" type="number" required class="w-full px-3 py-2 border border-gray-300 rounded-md" />
+        </div>
+      </div>
+
+      <div>
+        <label for="editDescription" class="block text-sm font-medium text-gray-700">Description</label>
+        <textarea id="editDescription" name="description" rows="3" required class="w-full px-3 py-2 border border-gray-300 rounded-md"></textarea>
+      </div>
+
+      <div>
+        <label for="editThumbnail" class="block text-sm font-medium text-gray-700">Thumbnail URL</label>
+        <input id="editThumbnail" name="thumbnail" type="url" class="w-full px-3 py-2 border border-gray-300 rounded-md" />
+      </div>
+
+      <div>
+        <label for="editCategory" class="block text-sm font-medium text-gray-700">Category</label>
+        <select id="editCategory" name="category" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+          <option value="jersey">Jersey</option>
+          <option value="update">Update</option>
+          <option value="sepatu">Sepatu</option>
+          <option value="topi">Topi</option>
+          <option value="celana">Celana</option>
+          <option value="botol minum">Botol Minum</option>
+          <option value="bola">Bola</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="editCondition" class="block text-sm font-medium text-gray-700">Condition</label>
+        <select id="editCondition" name="condition" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+          <option value="baru">Baru</option>
+          <option value="bekas">Bekas</option>
+        </select>
+      </div>
+
+      <div class="flex items-center">
+        <input id="editFeatured" name="is_featured" type="checkbox" class="w-4 h-4 text-green-600 border-gray-300 rounded">
+        <label for="editFeatured" class="ml-2 text-sm text-gray-700">Featured Product</label>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="flex flex-col sm:flex-row gap-4 p-6 border-t border-gray-200">
+      <button type="button" class="order-2 sm:order-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition" onclick="hideEditModal()">Cancel</button>
+      <button type="submit" form="editProductForm" class="order-1 sm:order-2 flex-1 bg-green-600 text-white px-6 py-3 rounded-md font-medium hover:bg-green-700 transition">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== SHOW / HIDE =====================
+function openEditModal(id, name, price, stock, description, thumbnail, category, condition, is_featured) {
+  document.getElementById('editId').value = id;
+  document.getElementById('editName').value = name;
+  document.getElementById('editPrice').value = price;
+  document.getElementById('editStock').value = stock;
+  document.getElementById('editDescription').value = description;
+  document.getElementById('editThumbnail').value = thumbnail;
+  document.getElementById('editCategory').value = category;
+  document.getElementById('editCondition').value = condition;
+  document.getElementById('editFeatured').checked = (is_featured === 'true' || is_featured === true);
+  document.getElementById('editModal').classList.remove('hidden');
+}
+
+function hideEditModal() {
+  document.getElementById('editModal').classList.add('hidden');
+}
+
+// ===================== SUBMIT EDIT =====================
+document.getElementById('editProductForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const id = document.getElementById('editId').value;
+  const formData = new FormData(e.target);
+
+  const res = await fetch(`/ajax/product/${id}/update/`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  const data = await res.json();
+  if (res.ok) {
+    showToast('Updated', 'Product updated successfully!', 'success');
+    document.dispatchEvent(new Event('productChanged'));
+    hideEditModal();
+  } else {
+    showToast('Error', data.error || 'Failed to update product', 'error');
+  }
+});
+</script>
+

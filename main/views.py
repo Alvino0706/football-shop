@@ -109,6 +109,7 @@ def show_json_by_id(request, product_id):
             'category': product.category,
             'is_featured': product.is_featured,
             'user_id': product.user_id,
+            'user_username': product.user.username if product.user else "Anonymous",
         }
         return JsonResponse(data)
     except Product.DoesNotExist:
@@ -200,3 +201,74 @@ def add_product_entry_ajax(request):
     new_product.save()
 
     return HttpResponse(b"CREATED", status=201)
+
+@csrf_exempt
+@login_required(login_url="/login")
+def update_product_ajax(request, id):
+    if request.method == 'POST':
+        try:
+            product = Product.objects.get(pk=id, user=request.user)
+            product.name = strip_tags(request.POST.get('name'))
+            product.price = request.POST.get('price')
+            product.stock = request.POST.get('stock')
+            product.description = strip_tags(request.POST.get('description'))
+            product.thumbnail = request.POST.get('thumbnail')
+            product.category = request.POST.get('category')
+            product.condition = request.POST.get('condition')
+            product.is_featured = request.POST.get('is_featured') == 'true'
+            product.save()
+            return JsonResponse({'message': 'Product updated successfully'})
+        except Product.DoesNotExist:
+            return JsonResponse({'error': 'You are not authorized to edit this product'}, status=403)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+@csrf_exempt
+@login_required(login_url="/login")
+def delete_product_ajax(request, id):
+    if request.method == 'POST':
+        try:
+            product = Product.objects.get(pk=id, user=request.user)
+            product.delete()
+            return JsonResponse({'message': 'Product deleted successfully'})
+        except Product.DoesNotExist:
+            return JsonResponse({'error': 'You are not authorized to delete this product'}, status=403)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+@csrf_exempt
+@login_required(login_url="/login")
+def buy_product_ajax(request, id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, pk=id)
+        if product.stock > 0:
+            product.stock -= 1
+            product.save()
+            return JsonResponse({'message': f'You bought {product.name}!'})
+        else:
+            return JsonResponse({'error': 'Out of stock'}, status=400)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+@csrf_exempt
+def register_ajax(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'Account created successfully!'})
+        return JsonResponse({'errors': form.errors}, status=400)
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+@csrf_exempt
+def login_ajax(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            return JsonResponse({'message': 'Login successful!'})
+        return JsonResponse({'error': 'Invalid credentials'}, status=401)
+    return JsonResponse({'error': 'Invalid request'}, status=400)

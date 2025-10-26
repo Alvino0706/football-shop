@@ -7,83 +7,66 @@
 
 {% block content %}
 <div class="bg-gray-50 w-full min-h-screen">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- Back Navigation -->
-        <div class="mb-6">
-            <a href="{% url 'main:show_main' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
-                ← Back to Product
-            </a>
-        </div>
-        
-        <!-- Loading State -->
-        <div id="loading-state" class="bg-white rounded-lg border border-gray-200 p-12 text-center">
-            <svg class="animate-spin h-8 w-8 text-green-600 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-            </svg>
-            <p class="text-gray-600 mt-3">Loading product detail...</p>
-        </div>
-
-        <!-- Error State -->
-        <div id="error-state" class="bg-white rounded-lg border border-gray-200 p-12 text-center hidden">
-            <div class="w-16 h-16 mx-auto mb-4">
-                <div class="text-red-500 text-5xl">⚠️</div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">Failed to load product</h3>
-            <p class="text-gray-500">Please try again later.</p>
-        </div>
-        
-        <!-- Article Content -->
-        <article id="article-content" class="bg-white rounded-lg border border-gray-200 overflow-hidden hidden">
-            
-            <!-- Header -->
-            <div class="p-6 sm:p-8">
-                <div id="badges-container" class="flex flex-wrap items-center gap-2 mb-4">
-                    <!-- Dynamic badges will be inserted here -->
-                </div>
-                
-                <h1 id="article-title" class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4">
-                    <!-- Title will be inserted here -->
-                </h1>
-                
-                <div class="flex flex-wrap items-center text-sm text-gray-500 gap-4">
-
-                </div>
-            </div>
-
-            <!-- Featured Image -->
-            <div id="featured-image-container" class="px-6 sm:px-8 hidden">
-                <img id="featured-image" 
-                     src="" 
-                     alt="" 
-                     class="w-full h-64 sm:h-80 lg:h-96 object-cover rounded-lg">
-            </div>
-
-            <!-- Content -->
-            <div class="p-6 sm:p-8">
-                <div class="prose prose-lg max-w-none">
-                    <div id="article-content-text" class="text-gray-700 leading-relaxed whitespace-pre-line text-base sm:text-lg">
-                        <!-- Content will be inserted here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Author Info -->
-            <div class="border-t border-gray-200 p-6 sm:p-8 bg-gray-50">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <div class="font-medium text-gray-900">
-                            <p id="article-author">Author: Loading...</p>
-                        </div>
-                        <p class="text-sm text-gray-500">Author</p>
-                    </div>
-                </div>
-            </div>
-        </article>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Back Navigation -->
+    <div class="mb-6">
+      <a href="{% url 'main:show_main' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
+        ← Back to Products
+      </a>
     </div>
-</div>
 
+    <!-- Loading State -->
+    <div id="loading-state" class="bg-white rounded-lg border border-gray-200 p-12 text-center">
+      <svg class="animate-spin h-8 w-8 text-green-600 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+      </svg>
+      <p class="text-gray-600 mt-3">Loading product detail...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="error-state" class="bg-white rounded-lg border border-gray-200 p-12 text-center hidden">
+      <div class="text-red-500 text-5xl mb-3">⚠️</div>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">Failed to load product</h3>
+      <p class="text-gray-500">Please try again later.</p>
+    </div>
+
+    <!-- Product Detail Content -->
+    <article id="product-content" class="bg-white rounded-lg border border-gray-200 overflow-hidden hidden">
+      <!-- Header -->
+      <div class="p-6 sm:p-8 border-b border-gray-100">
+        <div class="flex items-center gap-2 mb-4">
+          <span id="product-category" class="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-green-600 text-white"></span>
+          <span id="product-condition" class="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-gray-200 text-gray-800"></span>
+        </div>
+        <h1 id="product-title" class="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4"></h1>
+        <p id="product-price" class="text-green-600 font-semibold text-xl mb-2"></p>
+        <p id="product-stock" class="text-gray-500 text-sm mb-3"></p>
+      </div>
+
+      <!-- Featured Image -->
+      <div id="product-image-container" class="px-6 sm:px-8 py-4 hidden">
+        <img id="product-image" src="" alt="Product Image" class="w-full h-80 object-cover rounded-lg border border-gray-100 shadow-sm">
+      </div>
+
+      <!-- Description -->
+      <div class="p-6 sm:p-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">Description</h2>
+        <p id="product-description" class="text-gray-700 leading-relaxed whitespace-pre-line"></p>
+      </div>
+
+      <!-- Buy Button -->
+      <div class="border-t border-gray-200 p-6 sm:p-8 flex justify-between items-center">
+        <div>
+          <p class="text-sm text-gray-600">Created by: <span id="product-author" class="font-medium text-gray-900"></span></p>
+        </div>
+        <button id="buy-button" class="px-5 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition">
+          🛒 Buy Product
+        </button>
+      </div>
+    </article>
+  </div>
+</div>
 
 <script>
 // Configuration
@@ -93,109 +76,87 @@ const PRODUCT_DETAIL_ENDPOINT = `{% url 'main:show_json_by_id' '00000000-0000-00
 // DOM Elements
 const loadingState = document.getElementById('loading-state');
 const errorState = document.getElementById('error-state');
-const articleContent = document.getElementById('article-content');
-const badgesContainer = document.getElementById('badges-container');
-const articleTitle = document.getElementById('article-title');
-const articleDate = document.getElementById('article-date');
-const articleViews = document.getElementById('article-views');
-const featuredImageContainer = document.getElementById('featured-image-container');
-const featuredImage = document.getElementById('featured-image');
-const articleContentText = document.getElementById('article-content-text');
-const articleAuthor = document.getElementById('article-author');
+const productContent = document.getElementById('product-content');
 
-// Show/hide page sections
+const title = document.getElementById('product-title');
+const category = document.getElementById('product-category');
+const condition = document.getElementById('product-condition');
+const price = document.getElementById('product-price');
+const stock = document.getElementById('product-stock');
+const description = document.getElementById('product-description');
+const author = document.getElementById('product-author');
+const imageContainer = document.getElementById('product-image-container');
+const image = document.getElementById('product-image');
+const buyButton = document.getElementById('buy-button');
+
+// Show/hide states
 function showState(state) {
-    loadingState.classList.toggle('hidden', state !== 'loading');
-    errorState.classList.toggle('hidden', state !== 'error');
-    articleContent.classList.toggle('hidden', state !== 'ready');
+  loadingState.classList.toggle('hidden', state !== 'loading');
+  errorState.classList.toggle('hidden', state !== 'error');
+  productContent.classList.toggle('hidden', state !== 'ready');
 }
 
-// Get readable category name
-function getCategoryLabel(categoryCode) {
-    const categoryMapping = {
-        transfer: 'Transfer',
-        update: 'Update',
-        exclusive: 'Exclusive',
-        match: 'Match',
-        rumor: 'Rumor',
-        analysis: 'Analysis',
-    };
-    return categoryMapping[categoryCode] || categoryCode;
-}
+// Render product content
+function renderProduct(product) {
+  title.textContent = product.name;
+  category.textContent = product.category;
+  condition.textContent = product.condition === 'baru' ? 'New' : 'Used';
+  price.textContent = `Rp ${product.price}`;
+  stock.textContent = `Stock remaining: ${product.stock}`;
+  description.textContent = product.description;
 
-// Render article content
-function renderArticle(product) {
-    // Set title
-    articleTitle.textContent = product.name;
-    document.title = `${product.name} - Goal Store`;
-    
-    // Set badges
-    badgesContainer.innerHTML = '';
-    
-    // Category badge
-    const categoryBadge = document.createElement('span');
-    categoryBadge.className = 'inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-green-600 text-white';
-    categoryBadge.textContent = getCategoryLabel(product.category);
-    badgesContainer.appendChild(categoryBadge);
-    
-    // Featured badge
-    if (product.is_featured) {
-        const featuredBadge = document.createElement('span');
-        featuredBadge.className = 'inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-yellow-100 text-yellow-800';
-        featuredBadge.textContent = 'Featured';
-        badgesContainer.appendChild(featuredBadge);
-    }
-    
-    // Hot badge
-    if (product.product_views > 20) {
-        const hotBadge = document.createElement('span');
-        hotBadge.className = 'inline-flex items-center px-3 py-1 rounded-md text-xs font-medium bg-red-100 text-red-800';
-        hotBadge.textContent = 'Hot';
-        badgesContainer.appendChild(hotBadge);
-    }
-    
-    // Set featured image
-    if (product.thumbnail) {
-        featuredImage.src = product.thumbnail;
-        featuredImage.alt = product.name;
-        featuredImageContainer.classList.remove('hidden');
+  if (product.thumbnail) {
+    image.src = product.thumbnail;
+    imageContainer.classList.remove('hidden');
+  }
+
+  author.textContent = product.user_username || 'Unknown';
+  document.title = `${product.name} - Goal Store`;
+
+  // Disable buy button if stock = 0
+  if (product.stock <= 0) {
+    buyButton.disabled = true;
+    buyButton.classList.remove('bg-green-600', 'hover:bg-green-700');
+    buyButton.classList.add('bg-gray-400', 'cursor-not-allowed');
+    buyButton.textContent = 'Out of Stock';
+  } else {
+    buyButton.disabled = false;
+    buyButton.textContent = '🛒 Buy Product';
+  }
+
+  // Buy button click event
+  buyButton.onclick = async () => {
+    const res = await fetch(`/ajax/product/${PRODUCT_ID}/buy/`, { method: 'POST' });
+    const data = await res.json();
+    if (res.ok) {
+      showToast("Purchased", data.message, "success");
+      stock.textContent = `Stock remaining: ${product.stock - 1}`;
+      buyButton.disabled = true;
+      buyButton.classList.remove('bg-green-600', 'hover:bg-green-700');
+      buyButton.classList.add('bg-gray-400', 'cursor-not-allowed');
+      buyButton.textContent = 'Out of Stock';
     } else {
-        featuredImageContainer.classList.add('hidden');
+      showToast("Error", data.error || "Purchase failed", "error");
     }
-    
-    // Set content
-    articleContentText.textContent = product.description;
-    
-    // Set author
-    const authorName = product.user_username || 'Anonymous';
-    articleAuthor.textContent = `Author: ${authorName}`;
+  };
 }
 
-// Fetch product detail
+// Load product via AJAX
 async function loadProductDetail() {
-    try {
-        showState('loading');
-        
-        const response = await fetch(PRODUCT_DETAIL_ENDPOINT, {
-            headers: { 'Accept': 'application/json' },
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch product detail');
-        }
-
-        const productData = await response.json();
-        renderArticle(productData);
-        showState('ready');
-    } catch (error) {
-        console.error('Error loading product detail:', error);
-        showState('error');
-    }
+  try {
+    showState('loading');
+    const response = await fetch(PRODUCT_DETAIL_ENDPOINT, { headers: { 'Accept': 'application/json' } });
+    if (!response.ok) throw new Error('Failed to fetch');
+    const data = await response.json();
+    renderProduct(data);
+    showState('ready');
+  } catch (error) {
+    console.error(error);
+    showState('error');
+  }
 }
 
-// Initialize page
+// Initialize
 loadProductDetail();
 </script>
-
-
 {% endblock content %}
