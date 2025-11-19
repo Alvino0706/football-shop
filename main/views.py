@@ -7,7 +7,7 @@ from main.forms import ProductForm
 from main.models import Product
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core import serializers
-import datetime
+import datetime, requests, json
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -181,12 +181,12 @@ def buy_product(request, id):
 @csrf_exempt
 @require_POST
 def add_product_entry_ajax(request):
-    name = strip_tags(request.POST.get("name")) # strip HTML tags!
-    description = strip_tags(request.POST.get("description")) # strip HTML tags!
+    name = strip_tags(request.POST.get("name")) 
+    description = strip_tags(request.POST.get("description")) 
     category = request.POST.get("category")
-    condition = request.Post.get("condition")
+    condition = request.POST.get("condition")
     thumbnail = request.POST.get("thumbnail")
-    is_featured = request.POST.get("is_featured") == 'on'  # checkbox handling
+    is_featured = request.POST.get("is_featured") == 'on'  
     user = request.user
 
     new_product = Product(
@@ -272,3 +272,76 @@ def login_ajax(request):
             return JsonResponse({'message': 'Login successful!'})
         return JsonResponse({'error': 'Invalid credentials'}, status=401)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+def proxy_image(request):
+    image_url = request.GET.get('url')
+    if not image_url:
+        return HttpResponse('No URL provided', status=400)
+    
+    try:
+        # Fetch image from external source
+        response = requests.get(image_url, timeout=10)
+        response.raise_for_status()
+        
+        # Return the image with proper content type
+        return HttpResponse(
+            response.content,
+            content_type=response.headers.get('Content-Type', 'image/jpeg')
+        )
+    except requests.RequestException as e:
+        return HttpResponse(f'Error fetching image: {str(e)}', status=500)
+    
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        name = strip_tags(data.get("name", ""))  # Strip HTML tags
+        description = strip_tags(data.get("description", ""))  # Strip HTML tags
+        price = data.get("price", "")
+        stock = data.get("stock", "")
+        condition = data.get("condition", "")
+        category = data.get("category", "")
+        thumbnail = data.get("thumbnail", "")
+        is_featured = data.get("is_featured", False)
+        user = request.user
+        
+        new_product = Product(
+            name=name, 
+            description=description,
+            price=price,
+            stock=stock,
+            condition=condition,
+            category=category,
+            thumbnail=thumbnail,
+            is_featured=is_featured,
+            user=user
+        )
+        new_product.save()
+        
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+
+@login_required
+def my_products(request):
+    user = request.user
+    products = Product.objects.filter(user=user)
+    data = []
+
+    for p in products:
+        data.append({
+            "id": p.id,
+            "name": p.name,
+            "price": p.price,
+            "description": p.description,
+            "stock": p.stock,
+            "condition": p.condition,
+            "thumbnail": p.thumbnail,
+            "category": p.category,
+            "is_featured": p.is_featured,
+            "user_id": p.user.id,
+        })
+
+    return JsonResponse(data, safe=False)
+

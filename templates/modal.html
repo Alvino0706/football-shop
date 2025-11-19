@@ -108,7 +108,7 @@
 
     if (res.ok) {
       showToast("Success", "Product added successfully!", "success");
-      document.dispatchEvent(new Event("productChanged")); // trigger refresh
+      document.dispatchEvent(new Event("productChanged"));
       form.reset();
       hideModal();
     } else {
